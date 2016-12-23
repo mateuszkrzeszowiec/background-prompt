@@ -4,10 +4,11 @@
 // content-script.js
 "use strict";
 
+// FF: browser, Chrome: chrome
+var browser = browser || chrome;
+
 console.log("in content script");
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log("Message from the background script:");
-    console.log(request.body);
     sendResponse({body: prompt(request.body, 'default response from content script')});
 });

@@ -5,6 +5,11 @@
  */
 "use strict";
 
+// FF: browser, Chrome: chrome
+var browser = browser || chrome;
+
+console.log("in background script");
+
 function sendMessageToActiveTab(tab) {
     browser.tabs.sendMessage(
         tab.id,
