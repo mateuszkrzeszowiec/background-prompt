@@ -10,5 +10,5 @@ var browser = browser || chrome;
 console.log("in content script");
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    sendResponse({body: prompt(request.body, 'default response from content script')});
+    sendResponse({body: prompt(request.url, request.url)});
 });

@@ -10,15 +10,19 @@ var browser = browser || chrome;
 
 console.log("in background script");
 
-function sendMessageToActiveTab(tab) {
+function promptForUrl(requestDetails) {
     browser.tabs.sendMessage(
-        tab.id,
-        {body: "Hi from background script, message to tab id: " + tab.id},
+        requestDetails.tabId,
+        {url: requestDetails.url},
         function (response) {
             console.log(response);
         });
 }
 
-browser.browserAction.onClicked.addListener(function (tab) {
-    sendMessageToActiveTab(tab);
-});
+browser.webRequest.onBeforeRequest.addListener(
+    promptForUrl,
+    {urls: ['<all_urls>']},
+    [
+        "blocking"
+    ]
+);
