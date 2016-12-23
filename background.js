@@ -5,17 +5,15 @@
  */
 "use strict";
 
-function sendMessageToActiveTab(tabs) {
-    var tab = tabs[0];
-    if (tab) { // Sanity check
-        browser.tabs.sendMessage(
-            tab.id,
-            {body: "Hi from background script, message to tab id: " + tab.id}, function (response) {
-                console.log(response);
-            });
-    }
+function sendMessageToActiveTab(tab) {
+    browser.tabs.sendMessage(
+        tab.id,
+        {body: "Hi from background script, message to tab id: " + tab.id},
+        function (response) {
+            console.log(response);
+        });
 }
 
-browser.browserAction.onClicked.addListener(function () {
-    browser.tabs.query({currentWindow: true, active: true}, sendMessageToActiveTab);
+browser.browserAction.onClicked.addListener(function (tab) {
+    sendMessageToActiveTab(tab);
 });
